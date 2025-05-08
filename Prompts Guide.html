@@ -1,0 +1,670 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.5">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="vi"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Daily Prompt Generation Guide&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f3f4f6; /* Light gray background */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-card {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 0.75rem; /* 12px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 2rem; /* 32px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 1.5rem; /* 24px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-card:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-title {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.5rem; /* 24px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #1e3a8a; /* Dark blue */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 0.5rem; /* 8px */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-purpose {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1rem; /* 16px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #4b5563; /* Gray-600 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 1rem; /* 16px */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-component label {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #374151; /* Gray-700 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 0.25rem; /* 4px */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-component input[type="text"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-component textarea {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0.75rem; /* 12px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #d1d5db; /* Gray-300 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 0.5rem; /* 8px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 0.25rem; /* 4px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 0.75rem; /* 12px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: border-color 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-component input[type="text"]:focus,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-component textarea:focus {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: #2563eb; /* Blue-600 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.generate-button { /* Changed from copy-button */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #1e3a8a; /* Dark Blue */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0.75rem 1.5rem; /* 12px 24px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 0.5rem; /* 8px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: background-color 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.generate-button:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #1e40af; /* Slightly lighter blue */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.example-details summary {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #1d4ed8; /* Blue-700 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 1rem; /* 16px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: inline-block;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.example-content {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #eef2ff; /* Indigo-50 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 1rem; /* 16px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 0.5rem; /* 8px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 0.5rem; /* 8px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #374151; /* Gray-700 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 0.9rem; /* 14.4px */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>white-space: pre-wrap; /* Preserve formatting */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.generated-prompt-area {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0.75rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #d1d5db;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 0.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 0.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>min-height: 100px; /* Minimum height for the textarea */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.generated-prompt-area:focus {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: #2563eb;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2), inset 0 1px 2px rgba(0,0,0,0.05);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Custom scrollbar for textareas */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-component textarea::-webkit-scrollbar,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.generated-prompt-area::-webkit-scrollbar {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-component textarea::-webkit-scrollbar-track,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.generated-prompt-area::-webkit-scrollbar-track {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #f1f1f1;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-component textarea::-webkit-scrollbar-thumb,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.generated-prompt-area::-webkit-scrollbar-thumb {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #888;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-component textarea::-webkit-scrollbar-thumb:hover,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.generated-prompt-area::-webkit-scrollbar-thumb:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #555;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* For Firefox */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prompt-component textarea,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.generated-prompt-area {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>scrollbar-width: thin;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>scrollbar-color: #888 #f1f1f1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="p-4 md:p-8"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="text-center mb-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1 class="text-4xl font-bold text-gray-800"&gt;Hướng Dẫn Tạo Prompt Hoàn Hảo Hàng Ngày&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p class="text-lg text-gray-600 mt-2"&gt;Sử dụng 10 cấu trúc prompt hiệu quả với ChatGPT (Nguồn: Nghề Công Sở)&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="max-w-4xl mx-auto"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="create" class="prompt-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="prompt-title"&gt;1. C-R-E-A-T-E: Tạo câu chuyện lôi cuốn&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="prompt-purpose"&gt;Dùng để tạo post kể chuyện hấp dẫn và lôi cuốn.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="create-action-main"&gt;Action (Hành động chính):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="create-action-main" placeholder="Ví dụ: Kể một câu chuyện theo cấu trúc C-R-E-A-T-E về..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="c-char"&gt;C (Character - Nhân vật):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="c-char" placeholder="Nhập nhân vật..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="c-role"&gt;R (Role - Vai trò):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="c-role" placeholder="Nhập vai trò..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="c-env"&gt;E (Environment - Bối cảnh):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="c-env" placeholder="Nhập bối cảnh..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="c-action"&gt;A (Action - Hành động trong truyện):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="c-action" placeholder="Nhập hành động trong truyện..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="c-theme"&gt;T (Theme - Chủ đề):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="c-theme" placeholder="Nhập chủ đề..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="c-emotion"&gt;E (Emotion - Cảm xúc):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="c-emotion" placeholder="Nhập cảm xúc..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="generate-button mt-6" onclick="generatePrompt('create')"&gt;Tạo Prompt&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-6 prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="create-generated-prompt" class="block mb-1 font-semibold text-gray-700"&gt;Prompt đã tạo (có thể chỉnh sửa và sao chép):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea id="create-generated-prompt" rows="6" class="generated-prompt-area" placeholder="Prompt sẽ xuất hiện ở đây..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;details class="example-details"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;summary&gt;Xem ví dụ&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="example-content"&gt;</p>
+<p class="p1">Kể câu chuyện về một ông cụ tên Bình.</p>
+<p class="p1">Character: Ông Bình</p>
+<p class="p1">Role: Người giữ lửa truyền thống làm lồng đèn</p>
+<p class="p1">Environment: Khu phố cổ Hội An</p>
+<p class="p1">Action: Truyền nghề cho lũ trẻ trong mùa trung thu</p>
+<p class="p1">Theme: Gìn giữ văn hóa dân tộc</p>
+<p class="p1">Emotion: Tự hào, cảm động</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="sharp" class="prompt-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="prompt-title"&gt;2. S-H-A-R-P: Cấu trúc viết nội dung chuyển đổi cao&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="prompt-purpose"&gt;Hiệu quả với email, bài bán hàng, nội dung quảng bá...&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="sharp-action-main"&gt;Action (Hành động chính):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="sharp-action-main" placeholder="Ví dụ: Viết nội dung bán hàng theo cấu trúc S-H-A-R-P cho..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="s-situation"&gt;S (Situation - Tình huống):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="s-situation" placeholder="Nhập tình huống..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="s-hook"&gt;H (Hook - Câu hook):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="s-hook" placeholder="Nhập câu hook..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="s-approach"&gt;A (Approach - Cách tiếp cận):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="s-approach" placeholder="Nhập cách tiếp cận..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="s-reason"&gt;R (Reason - Lý do tin tưởng):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="s-reason" placeholder="Nhập lý do tin tưởng..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="s-persuade"&gt;P (Persuade - Kêu gọi hành động):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="s-persuade" placeholder="Nhập kêu gọi hành động..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="generate-button mt-6" onclick="generatePrompt('sharp')"&gt;Tạo Prompt&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-6 prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="sharp-generated-prompt" class="block mb-1 font-semibold text-gray-700"&gt;Prompt đã tạo (có thể chỉnh sửa và sao chép):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea id="sharp-generated-prompt" rows="6" class="generated-prompt-area" placeholder="Prompt sẽ xuất hiện ở đây..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;details class="example-details"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;summary&gt;Xem ví dụ&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="example-content"&gt;</p>
+<p class="p1">Viết nội dung bán túi thủ công từ vải thổ cẩm.</p>
+<p class="p1">Situation: Người trẻ muốn dùng đồ bền vững</p>
+<p class="p1">Hook: Chiếc túi mang cả câu chuyện Tây Bắc</p>
+<p class="p1">Approach: Thủ công, từ người bản địa, 100% cotton</p>
+<p class="p1">Reason: Mỗi chiếc là duy nhất – không trùng lặp</p>
+<p class="p1">Persuade: Đặt hàng ngay để nhận ưu đãi mùa hè</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="idea" class="prompt-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="prompt-title"&gt;3. I-D-E-A: Phát triển ý tưởng thành giải pháp&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="prompt-purpose"&gt;Dùng khi brainstorm, lên concept, xử lý tình huống.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="idea-action-main"&gt;Action (Hành động chính):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="idea-action-main" placeholder="Ví dụ: Phát triển ý tưởng tổ chức sự kiện hè theo cấu trúc I-D-E-A..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="i-ideate"&gt;I (Ideate - Đưa ra ý tưởng):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;textarea id="i-ideate" rows="2" placeholder="Mô tả yêu cầu để AI đưa ra ý tưởng..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="i-develop"&gt;D (Develop - Phát triển ý tưởng):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;textarea id="i-develop" rows="2" placeholder="Mô tả yêu cầu để AI phát triển chi tiết..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="i-evaluate"&gt;E (Evaluate - Đánh giá, chọn lọc):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;textarea id="i-evaluate" rows="2" placeholder="Mô tả yêu cầu để AI đánh giá, chọn lọc..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="i-action"&gt;A (Action - Hành động đề xuất):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;textarea id="i-action" rows="2" placeholder="Mô tả yêu cầu để AI đề xuất bước hành động..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="generate-button mt-6" onclick="generatePrompt('idea')"&gt;Tạo Prompt&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-6 prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="idea-generated-prompt" class="block mb-1 font-semibold text-gray-700"&gt;Prompt đã tạo (có thể chỉnh sửa và sao chép):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea id="idea-generated-prompt" rows="6" class="generated-prompt-area" placeholder="Prompt sẽ xuất hiện ở đây..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;details class="example-details"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;summary&gt;Xem ví dụ&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="example-content"&gt;</p>
+<p class="p1">Tôi muốn tổ chức một hoạt động hè cho thiếu nhi ở phường.</p>
+<p class="p1">Ideate: Gợi ý các chủ đề hoạt động thú vị</p>
+<p class="p1">Develop: Phát triển chi tiết cho từng chủ đề</p>
+<p class="p1">Evaluate: Hoạt động nào dễ triển khai, tiết kiệm chi phí</p>
+<p class="p1">Action: Đề xuất bước khởi động chương trình</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="step" class="prompt-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="prompt-title"&gt;4. S-T-E-P: Cấu trúc ra quyết định&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="prompt-purpose"&gt;Dùng để phân tích, định hướng, lập kế hoạch.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="step-action-main"&gt;Action (Hành động chính):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="step-action-main" placeholder="Ví dụ: Giúp tôi ra quyết định chọn món ăn theo cấu trúc S-T-E-P..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="st-problem"&gt;S (State the problem - Nêu rõ vấn đề):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="st-problem" placeholder="Nêu rõ vấn đề..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="st-tailor"&gt;T (Tailor with context - Điều chỉnh theo bối cảnh):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="st-tailor" placeholder="Điều chỉnh theo bối cảnh..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="st-evaluate"&gt;E (Evaluate options - Phân tích các lựa chọn):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;textarea id="st-evaluate" rows="2" placeholder="Yêu cầu AI phân tích các lựa chọn..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="st-plan"&gt;P (Plan next steps - Lên kế hoạch hành động):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;textarea id="st-plan" rows="2" placeholder="Yêu cầu AI lên kế hoạch hành động..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="generate-button mt-6" onclick="generatePrompt('step')"&gt;Tạo Prompt&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-6 prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="step-generated-prompt" class="block mb-1 font-semibold text-gray-700"&gt;Prompt đã tạo (có thể chỉnh sửa và sao chép):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea id="step-generated-prompt" rows="6" class="generated-prompt-area" placeholder="Prompt sẽ xuất hiện ở đây..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;details class="example-details"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;summary&gt;Xem ví dụ&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="example-content"&gt;</p>
+<p class="p1">Tôi đang chọn món ăn chính cho tiệc cưới ngoài trời.</p>
+<p class="p1">State the problem: Không biết chọn món nào vừa ngon vừa dễ phục vụ</p>
+<p class="p1">Tailor with context: Sân vườn, 200 khách, phục vụ buffet</p>
+<p class="p1">Evaluate options: Thịt nướng, hải sản, món Việt truyền thống</p>
+<p class="p1">Plan next steps: Gợi ý lựa chọn hợp lý và nhà cung cấp uy tín</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="ace" class="prompt-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="prompt-title"&gt;5. A-C-E: Tạo nội dung sáng tạo bằng AI&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="prompt-purpose"&gt;Dùng trong brand content, post mạng xã hội, chiến dịch marketing...&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="ace-action-main"&gt;Action (Hành động chính):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="ace-action-main" placeholder="Ví dụ: Viết mô tả sản phẩm theo cấu trúc A-C-E cho..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="a-audience"&gt;A (Audience - Đối tượng):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="a-audience" placeholder="Nhập đối tượng..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="a-context"&gt;C (Context - Bối cảnh, tình huống):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="a-context" placeholder="Nhập bối cảnh, tình huống..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="a-example"&gt;E (Example - Mẫu nội dung + CTA):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;textarea id="a-example" rows="3" placeholder="Cung cấp mẫu nội dung mong muốn và Call To Action..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="generate-button mt-6" onclick="generatePrompt('ace')"&gt;Tạo Prompt&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-6 prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="ace-generated-prompt" class="block mb-1 font-semibold text-gray-700"&gt;Prompt đã tạo (có thể chỉnh sửa và sao chép):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea id="ace-generated-prompt" rows="6" class="generated-prompt-area" placeholder="Prompt sẽ xuất hiện ở đây..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;details class="example-details"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;summary&gt;Xem ví dụ&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="example-content"&gt;</p>
+<p class="p1">Viết mô tả sản phẩm cho nến thơm làm từ sáp đậu nành.</p>
+<p class="p1">Audience: Phụ nữ tuổi 25-40, yêu thích decor, thư giãn</p>
+<p class="p1">Context: Nến dùng trong spa, thiền, phòng ngủ</p>
+<p class="p1">Example: Viết mô tả 1 sản phẩm + CTA nhẹ nhàng (Ví dụ: Mua ngay – tự thưởng cho bạn một buổi tối yên bình)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="brief" class="prompt-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="prompt-title"&gt;6. B-R-I-E-F: Viết gọn mà rõ&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="prompt-purpose"&gt;Dùng để viết prompt ngắn, súc tích, rõ ràng.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="brief-action-main"&gt;Action (Hành động chính):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="brief-action-main" placeholder="Ví dụ: Viết caption giới thiệu sản phẩm X theo cấu trúc B-R-I-E-F..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="b-background"&gt;B (Background - Bối cảnh):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="b-background" placeholder="Nhập bối cảnh..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="b-requirement"&gt;R (Requirement - Yêu cầu):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="b-requirement" placeholder="Nhập yêu cầu..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="b-intent"&gt;I (Intent - Mục tiêu):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="b-intent" placeholder="Nhập mục tiêu..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="b-expectation"&gt;E (Expectation - Kỳ vọng):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="b-expectation" placeholder="Nhập kỳ vọng..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="b-format"&gt;F (Format - Định dạng đầu ra):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="b-format" placeholder="Nhập định dạng đầu ra..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="generate-button mt-6" onclick="generatePrompt('brief')"&gt;Tạo Prompt&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-6 prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="brief-generated-prompt" class="block mb-1 font-semibold text-gray-700"&gt;Prompt đã tạo (có thể chỉnh sửa và sao chép):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea id="brief-generated-prompt" rows="6" class="generated-prompt-area" placeholder="Prompt sẽ xuất hiện ở đây..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;details class="example-details"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;summary&gt;Xem ví dụ&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="example-content"&gt;</p>
+<p class="p1">Viết caption giới thiệu bánh mì kẹp cá ngừ cho fanpage quán ăn.</p>
+<p class="p1">Background: Quán mới mở, cần tăng tương tác</p>
+<p class="p1">Requirement: Caption ngắn dưới 20 từ</p>
+<p class="p1">Intent: Tạo tò mò, thèm ăn</p>
+<p class="p1">Expectation: Giọng tươi trẻ, vui vẻ</p>
+<p class="p1">Format: Dạng caption Facebook kèm emoji</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="facts" class="prompt-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="prompt-title"&gt;7. F-A-C-T-S: Tối ưu nội dung giáo dục&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="prompt-purpose"&gt;Dùng cho slide bài giảng, tài liệu học tập.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="facts-action-main"&gt;Action (Hành động chính):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="facts-action-main" placeholder="Ví dụ: Tạo nội dung hướng dẫn về chủ đề Y theo cấu trúc F-A-C-T-S..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="f-focus"&gt;F (Focus - Chủ đề):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="f-focus" placeholder="Nhập chủ đề..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="f-audience"&gt;A (Audience - Đối tượng học):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="f-audience" placeholder="Nhập đối tượng học..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="f-clarity"&gt;C (Clarity - Đơn giản mức nào):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="f-clarity" placeholder="Mức độ đơn giản (ví dụ: cho người mới bắt đầu, chuyên sâu)..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="f-tone"&gt;T (Tone - Giọng điệu):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="f-tone" placeholder="Nhập giọng điệu..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="f-style"&gt;S (Style - Phong cách trình bày):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="f-style" placeholder="Nhập phong cách trình bày (ví dụ: bullet point, kể chuyện)..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="generate-button mt-6" onclick="generatePrompt('facts')"&gt;Tạo Prompt&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-6 prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="facts-generated-prompt" class="block mb-1 font-semibold text-gray-700"&gt;Prompt đã tạo (có thể chỉnh sửa và sao chép):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea id="facts-generated-prompt" rows="6" class="generated-prompt-area" placeholder="Prompt sẽ xuất hiện ở đây..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;details class="example-details"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;summary&gt;Xem ví dụ&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="example-content"&gt;</p>
+<p class="p1">Tạo nội dung hướng dẫn trẻ lớp 4 phân loại rác.</p>
+<p class="p1">Focus: Phân biệt rác vô cơ – hữu cơ</p>
+<p class="p1">Audience: Trẻ tiểu học</p>
+<p class="p1">Clarity: Đơn giản, ví dụ cụ thể</p>
+<p class="p1">Tone: Vui nhộn, dễ nhớ</p>
+<p class="p1">Style: Bullet point kèm hình ảnh minh họa</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="prompt_meta" class="prompt-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="prompt-title"&gt;8. P-R-O-M-P-T: Viết prompt meta (dùng AI viết prompt)&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="prompt-purpose"&gt;Dùng khi muốn ChatGPT hỗ trợ viết prompt tốt hơn.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="prompt_meta-action-main"&gt;Action (Hành động chính):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="prompt_meta-action-main" placeholder="Ví dụ: Viết một prompt theo cấu trúc P-R-O-M-P-T để tạo ảnh poster..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="pm-purpose"&gt;P (Purpose - Mục tiêu prompt):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="pm-purpose" placeholder="Nhập mục tiêu của prompt cần tạo..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="pm-role"&gt;R (Role - Vai trò của AI khi tạo prompt):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="pm-role" placeholder="Nhập vai trò của AI (ví dụ: bạn là chuyên gia prompt engineering)..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="pm-output"&gt;O (Output - Dạng đầu ra của prompt cần tạo):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="pm-output" placeholder="Nhập dạng đầu ra (ví dụ: prompt cho Midjourney, prompt text)..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="pm-method"&gt;M (Method - Phương pháp xử lý của prompt cần tạo):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="pm-method" placeholder="Mô tả phương pháp (ví dụ: mô tả cảnh, phong cách)..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="pm-parameters"&gt;P (Parameters - Giới hạn của prompt cần tạo):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="pm-parameters" placeholder="Nhập các giới hạn (ví dụ: 4K, tỉ lệ, tone màu)..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="pm-tone"&gt;T (Tone - Giọng điệu của prompt cần tạo):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="pm-tone" placeholder="Nhập giọng điệu (ví dụ: truyền cảm, chuyên nghiệp)..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="generate-button mt-6" onclick="generatePrompt('prompt_meta')"&gt;Tạo Prompt&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-6 prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="prompt_meta-generated-prompt" class="block mb-1 font-semibold text-gray-700"&gt;Prompt đã tạo (có thể chỉnh sửa và sao chép):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea id="prompt_meta-generated-prompt" rows="6" class="generated-prompt-area" placeholder="Prompt sẽ xuất hiện ở đây..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;details class="example-details"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;summary&gt;Xem ví dụ&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="example-content"&gt;</p>
+<p class="p1">Viết prompt để tạo ảnh poster 'Ngày Hội Đọc Sách'.</p>
+<p class="p1">Purpose: Tạo ảnh minh họa cho poster</p>
+<p class="p1">Role: Bạn là designer AI</p>
+<p class="p1">Output: Prompt Midjourney tạo ảnh người đọc sách giữa công viên</p>
+<p class="p1">Method: Mô tả cảnh + ánh sáng + phong cách màu sắc</p>
+<p class="p1">Parameters: 4K, tỉ lệ 4:5, tone sáng</p>
+<p class="p1">Tone: Truyền cảm, tích cực</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="heart" class="prompt-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="prompt-title"&gt;9. H-E-A-R-T: Viết nội dung cảm xúc, nhân văn&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="prompt-purpose"&gt;Dùng cho video truyền cảm hứng hoặc câu chuyện nhân văn.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="heart-action-main"&gt;Action (Hành động chính):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="heart-action-main" placeholder="Ví dụ: Kể một câu chuyện cảm động theo cấu trúc H-E-A-R-T về..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="h-humanity"&gt;H (Humanity - Yếu tố con người):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="h-humanity" placeholder="Nhập yếu tố con người..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="h-emotion"&gt;E (Emotion - Cảm xúc):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="h-emotion" placeholder="Nhập cảm xúc..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="h-action"&gt;A (Action - Hành động trong truyện):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="h-action" placeholder="Nhập hành động trong truyện..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="h-reflection"&gt;R (Reflection - Chiêm nghiệm):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="h-reflection" placeholder="Nhập chiêm nghiệm..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="h-takeaway"&gt;T (Takeaway - Thông điệp cuối cùng):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="h-takeaway" placeholder="Nhập thông điệp cuối cùng..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="generate-button mt-6" onclick="generatePrompt('heart')"&gt;Tạo Prompt&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-6 prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="heart-generated-prompt" class="block mb-1 font-semibold text-gray-700"&gt;Prompt đã tạo (có thể chỉnh sửa và sao chép):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea id="heart-generated-prompt" rows="6" class="generated-prompt-area" placeholder="Prompt sẽ xuất hiện ở đây..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;details class="example-details"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;summary&gt;Xem ví dụ&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="example-content"&gt;</p>
+<p class="p1">Kể một câu chuyện ngắn cảm động về một người lặng lẽ chăm sóc chó hoang.</p>
+<p class="p1">Humanity: Một chú bảo vệ trường tiểu học</p>
+<p class="p1">Emotion: Dịu dàng, cảm động</p>
+<p class="p1">Action: Hằng ngày gom cơm thừa cho 3 chú chó hoang</p>
+<p class="p1">Reflection: Không ai nhờ, cũng chẳng đợi cảm ơn</p>
+<p class="p1">Takeaway: Lòng tốt không cần ồn ào</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="goal" class="prompt-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="prompt-title"&gt;10. G-O-A-L: Xác định yêu cầu rõ ràng&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="prompt-purpose"&gt;Giúp prompt rõ ràng, ChatGPT phản hồi sát nhu cầu.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="goal-action-main"&gt;Action (Hành động chính):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="goal-action-main" placeholder="Ví dụ: Lên kế hoạch tổ chức workshop theo cấu trúc G-O-A-L..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="g-goal"&gt;G (Goal - Mục tiêu):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="g-goal" placeholder="Nhập mục tiêu..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="g-obstacles"&gt;O (Obstacles - Rào cản):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="g-obstacles" placeholder="Nhập rào cản..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="g-assets"&gt;A (Assets - Tài nguyên có):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="g-assets" placeholder="Nhập tài nguyên có..."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="g-leverage"&gt;L (Leverage - Muốn AI hỗ trợ thế nào):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;textarea id="g-leverage" rows="2" placeholder="Mô tả cách bạn muốn AI hỗ trợ..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="generate-button mt-6" onclick="generatePrompt('goal')"&gt;Tạo Prompt&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-6 prompt-component"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="goal-generated-prompt" class="block mb-1 font-semibold text-gray-700"&gt;Prompt đã tạo (có thể chỉnh sửa và sao chép):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea id="goal-generated-prompt" rows="6" class="generated-prompt-area" placeholder="Prompt sẽ xuất hiện ở đây..."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;details class="example-details"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;summary&gt;Xem ví dụ&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="example-content"&gt;</p>
+<p class="p1">Tôi muốn tổ chức workshop dạy làm bánh trung thu cho trẻ em.</p>
+<p class="p1">Goal: Dạy trẻ trải nghiệm làm bánh truyền thống</p>
+<p class="p1">Obstacles: Không có lò nướng, không gian hạn chế</p>
+<p class="p1">Assets: Có giáo viên, nguyên liệu đầy đủ</p>
+<p class="p1">Leverage: Đề xuất phương án tổ chức đơn giản mà hiệu quả</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer class="text-center mt-12 mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p class="text-gray-600 text-sm"&gt;Chúc bạn tạo ra những prompt tuyệt vời! ✨&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p class="text-gray-500 text-xs mt-1"&gt;Dựa trên tài liệu "10 Cấu Trúc Prompt Hiệu Quả" từ Nghề Công Sở.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Function to construct and display the prompt in a textarea</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function generatePrompt(methodId) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let promptText = "";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const section = document.getElementById(methodId);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Select the main action input using a more specific ID pattern</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const actionInput = section.querySelector(`input[id="${methodId}-action-main"]`);</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Select all component inputs (text and textarea) excluding the main action input and the generated prompt textarea</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const componentInputs = section.querySelectorAll(</p>
+<p class="p1"><span class="Apple-converted-space">                </span>`.prompt-component input[type="text"]:not([id="${methodId}-action-main"]), .prompt-component textarea:not([id="${methodId}-generated-prompt"])`</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Select the output textarea using a specific ID pattern</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const outputTextarea = section.querySelector(`textarea[id="${methodId}-generated-prompt"]`);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!actionInput || actionInput.value.trim() === "") {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert("Vui lòng nhập 'Action (Hành động chính)' để tạo prompt.");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if(outputTextarea) outputTextarea.value = ""; // Clear previous prompt if any</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>promptText = actionInput.value.trim(); // Start with the main action</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>let componentsContent = "";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>componentInputs.forEach(input =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Ensure we are not processing the output textarea itself if it somehow got selected (e.g. if it had .prompt-component class directly)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (input.id === `${methodId}-generated-prompt`) return;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Also, for I-D-E-A, S-T-E-P, A-C-E, G-O-A-L, the component labels are slightly different</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// We need to ensure the label is correctly fetched.</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const labelElement = section.querySelector(`label[for="${input.id}"]`);</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (labelElement &amp;&amp; input.value.trim() !== "") {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Get the text before the colon, or the full text if no colon.</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const labelText = labelElement.textContent.split(':')[0].trim();</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>componentsContent += `\n${labelText}: ${input.value.trim()}`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (componentsContent) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>promptText += "\n" + componentsContent; // Add a newline only if there are components</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(outputTextarea) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>outputTextarea.value = promptText.trim();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error("Output textarea not found for methodId: " + methodId);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
